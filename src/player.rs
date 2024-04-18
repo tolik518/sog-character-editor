@@ -1,12 +1,11 @@
 use std::fs::File;
-use std::io;
-use std::io::BufReader;
+use std::io::{self, BufReader};
 use std::path::Path;
+
 use serde::{Deserialize, Serialize};
 
-use crate::csharp_string::read_csharp_string;
+use crate::csharp_string::{CSharpString, read_csharp_string};
 use crate::quickslot::{QuickSlot, read_quickslots};
-use crate::csharp_string::CSharpString;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct PlayerPart1 {
@@ -39,14 +38,14 @@ pub(crate) struct PlayerPart2 {
     style_poncho_color: u8,
     style_shirt_color: u8,
     style_pants_color: u8,
-    pub(crate) style_sex: u8
+    pub(crate) style_sex: u8,
 }
 
 #[derive(Debug)]
 pub(crate) struct Player {
-    playerPart1: PlayerPart1,
+    player_part1: PlayerPart1,
     quickslots: Vec<QuickSlot>,
-    pub(crate) playerPart2: PlayerPart2,
+    pub(crate) player_part2: PlayerPart2,
     pub(crate) nickname: CSharpString,
 }
 
@@ -56,19 +55,24 @@ impl Player {
         let mut reader = BufReader::new(file);
 
         // Deserialize the first part of the player
-        let playerPart1: PlayerPart1 = bincode::deserialize_from(&mut reader)
+        let player_part1: PlayerPart1 = bincode::deserialize_from(&mut reader)
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
 
         // Manually deserialize quickslots
         let quickslots = read_quickslots(&mut reader)?;
 
         // Continue with deserialization for the second part of the player
-        let mut playerPart2: PlayerPart2 = bincode::deserialize_from(&mut reader)
+        let mut player_part2: PlayerPart2 = bincode::deserialize_from(&mut reader)
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
 
         // Manually deserialize nickname
         let nickname = read_csharp_string(&mut reader)?;
 
-        Ok(Player { playerPart1, quickslots, playerPart2, nickname })
+        Ok(Player {
+            player_part1,
+            quickslots,
+            player_part2,
+            nickname,
+        })
     }
 }

@@ -1,7 +1,8 @@
 use std::io;
 use std::io::Read;
+
 use byteorder::{LittleEndian, ReadBytesExt};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum QuickSlot {
@@ -12,9 +13,9 @@ pub enum QuickSlot {
 
 pub(crate) fn read_quickslots<R: Read>(reader: &mut R) -> io::Result<Vec<QuickSlot>> {
     let mut quickslots = Vec::new();
-    for i in 0..10 { // Assuming you know there are 10 slots, adjust accordingly.
+    for i in 0..=9 {
         let slot_type = reader.read_u8()?;
-        println!("Slot {:?}: {:?}", i,  slot_type);
+        println!("Slot {:?}: {:?}", i, slot_type);
 
         quickslots.push(match slot_type {
             1 => QuickSlot::Item(reader.read_i32::<LittleEndian>()?),

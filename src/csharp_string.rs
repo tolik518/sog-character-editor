@@ -1,11 +1,10 @@
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
+
 use byteorder::ReadBytesExt;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde::ser::SerializeSeq;
 
 /// A custom type to represent a string that first stores its length as a `u8` followed by the characters.
-
 #[derive(Debug, Clone)]
 pub(crate) struct CSharpString(String);
 
@@ -50,12 +49,18 @@ impl<'de> Deserialize<'de> for CSharpString {
                 where
                     A: serde::de::SeqAccess<'de>,
             {
-                let len: u8 = seq.next_element()?.ok_or(serde::de::Error::invalid_length(0, &self))?;
+                let len: u8 = seq
+                    .next_element()?
+                    .ok_or(serde::de::Error::invalid_length(0, &self))?;
                 let mut bytes = vec![0u8; len as usize];
                 for i in 0..len as usize {
-                    bytes[i] = seq.next_element()?.ok_or(serde::de::Error::invalid_length(i + 1, &self))?;
+                    bytes[i] = seq
+                        .next_element()?
+                        .ok_or(serde::de::Error::invalid_length(i + 1, &self))?;
                 }
-                let string = String::from_utf8(bytes.clone()).map_err(|_| serde::de::Error::invalid_value(serde::de::Unexpected::Bytes(&bytes), &self))?;
+                let string = String::from_utf8(bytes.clone()).map_err(|_| {
+                    serde::de::Error::invalid_value(serde::de::Unexpected::Bytes(&bytes), &self)
+                })?;
                 Ok(CSharpString(string))
             }
         }
@@ -63,7 +68,6 @@ impl<'de> Deserialize<'de> for CSharpString {
         deserializer.deserialize_seq(CSharpStringVisitor)
     }
 }
-
 
 pub(crate) fn read_csharp_string<R: Read>(reader: &mut R) -> io::Result<CSharpString> {
     // Read the length of the string as a u8
