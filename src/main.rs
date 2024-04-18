@@ -1,7 +1,31 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
-use eframe::{egui, Theme};
+mod csharp_string;
+mod quickslot;
+mod player;
+use crate::player::Player;
 
+//use eframe::{egui, Theme};
+use eframe::egui::debug_text::print;
+
+use serde::{Serialize, Serializer, Deserialize, Deserializer, de};
+use serde::ser::{SerializeTupleStruct, SerializeStruct, SerializeSeq};
+use serde::de::{Visitor, SeqAccess, Error as DeError, Error};
+
+use std::io::{self, BufReader, Read};
+
+
+
+
+fn main() -> io::Result<()> {
+    let player = Player::read_from_file("test/savegames/0.cha")?;
+    println!("Sex: {}", player.end.style_sex);
+    println!("Nickname: {:?}", player.nickname);
+    Ok(())
+}
+
+
+/*
 fn main() -> Result<(), eframe::Error> {
     env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
 
@@ -34,4 +58,4 @@ fn main() -> Result<(), eframe::Error> {
 
 fn button_age(age: &mut i32) {
     *age += 1;
-}
+}*/
