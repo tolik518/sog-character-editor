@@ -5,21 +5,18 @@ mod quickslot;
 mod player;
 use crate::player::Player;
 
-//use eframe::{egui, Theme};
+use eframe::{egui, Theme};
 use eframe::egui::debug_text::print;
 
 use serde::{Serialize, Serializer, Deserialize, Deserializer, de};
 use serde::ser::{SerializeTupleStruct, SerializeStruct, SerializeSeq};
 use serde::de::{Visitor, SeqAccess, Error as DeError, Error};
 
-use std::io::{self, BufReader, Read};
-
-
-
+use std::io::{self, Read};
 
 fn main() -> io::Result<()> {
     let player = Player::read_from_file("test/savegames/0.cha")?;
-    println!("Sex: {}", player.end.style_sex);
+    println!("Sex: {}", player.playerPart2.style_sex);
     println!("Nickname: {:?}", player.nickname);
     Ok(())
 }

@@ -39,15 +39,14 @@ pub(crate) struct PlayerPart2 {
     style_poncho_color: u8,
     style_shirt_color: u8,
     style_pants_color: u8,
-
     pub(crate) style_sex: u8
 }
 
 #[derive(Debug)]
 pub(crate) struct Player {
-    start: PlayerPart1,
+    playerPart1: PlayerPart1,
     quickslots: Vec<QuickSlot>,
-    pub(crate) end: PlayerPart2,
+    pub(crate) playerPart2: PlayerPart2,
     pub(crate) nickname: CSharpString,
 }
 
@@ -57,19 +56,19 @@ impl Player {
         let mut reader = BufReader::new(file);
 
         // Deserialize the first part of the player
-        let start: PlayerPart1 = bincode::deserialize_from(&mut reader)
+        let playerPart1: PlayerPart1 = bincode::deserialize_from(&mut reader)
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
 
-        // Manually read quickslots
+        // Manually deserialize quickslots
         let quickslots = read_quickslots(&mut reader)?;
 
-        // Manually read CSharpString for the nickname
-
-        // Continue with deserialization for PlayerPart2 but manually inject the nickname
-        let mut end: PlayerPart2 = bincode::deserialize_from(&mut reader)
+        // Continue with deserialization for the second part of the player
+        let mut playerPart2: PlayerPart2 = bincode::deserialize_from(&mut reader)
             .map_err(|e| io::Error::new(io::ErrorKind::Other, e.to_string()))?;
+
+        // Manually deserialize nickname
         let nickname = read_csharp_string(&mut reader)?;
 
-        Ok(Player { start, quickslots, end, nickname })
+        Ok(Player { playerPart1, quickslots, playerPart2, nickname })
     }
 }

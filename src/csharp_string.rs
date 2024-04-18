@@ -15,7 +15,6 @@ impl CSharpString {
     }
 }
 
-// Implementing Serialize for CSharpString
 impl Serialize for CSharpString {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where
@@ -33,7 +32,6 @@ impl Serialize for CSharpString {
     }
 }
 
-// Implementing Deserialize for CSharpString using a custom deserialization function
 impl<'de> Deserialize<'de> for CSharpString {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
         where
@@ -73,7 +71,7 @@ pub(crate) fn read_csharp_string<R: Read>(reader: &mut R) -> io::Result<CSharpSt
     // Allocate a buffer based on the length and read the string data into it
     let mut buffer = vec![0u8; len as usize];
     reader.read_exact(&mut buffer)?;
-    // Convert the buffer to a String
+
     let string = String::from_utf8(buffer)
         .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid UTF-8"))?;
 
