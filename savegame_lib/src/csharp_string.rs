@@ -30,6 +30,42 @@ impl Serialize for CSharpString {
     }
 }
 
+impl From<String> for CSharpString {
+    fn from(s: String) -> Self {
+        CSharpString(s)
+    }
+}
+
+impl From<&str> for CSharpString {
+    fn from(s: &str) -> Self {
+        CSharpString(s.to_string())
+    }
+}
+
+impl AsRef<str> for CSharpString {
+    fn as_ref(&self) -> &str {
+        &self.0
+    }
+}
+
+impl AsRef<String> for CSharpString {
+    fn as_ref(&self) -> &String {
+        &self.0
+    }
+}
+
+impl From<CSharpString> for Vec<u8> {
+    fn from(s: CSharpString) -> Self {
+        s.0.into_bytes()
+    }
+}
+
+impl From<CSharpString> for String {
+    fn from(s: CSharpString) -> Self {
+        s.0
+    }
+}
+
 impl<'de> Deserialize<'de> for CSharpString {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
         where
