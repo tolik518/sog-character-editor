@@ -1,12 +1,12 @@
-use std::io::{self, Read};
+use std::io::{self, Read, Write};
 
-use byteorder::ReadBytesExt;
+use byteorder::{ReadBytesExt, WriteBytesExt};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde::ser::SerializeSeq;
 
 /// A custom type to represent a string that first stores its length as a `u8` followed by the characters.
 #[derive(Debug, Clone)]
-pub(crate) struct CSharpString(String);
+pub struct CSharpString(String);
 
 impl CSharpString {
     fn new<S: Into<String>>(s: S) -> Self {
@@ -19,7 +19,6 @@ impl Serialize for CSharpString {
         where
             S: Serializer,
     {
-        // Serialize the string as bytes, preceded by its length as u8
         let bytes = self.0.as_bytes();
         let len = bytes.len() as u8;
         let mut seq = serializer.serialize_seq(Some(len as usize + 1))?;
@@ -80,4 +79,23 @@ pub(crate) fn read_csharp_string<R: Read>(reader: &mut R) -> io::Result<CSharpSt
         .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "Invalid UTF-8"))?;
 
     Ok(CSharpString(string))
+}
+
+pub(crate) fn write_csharp_string<W: Write>(writer: &mut W, csharp_string: &CSharpString) -> io::Result<()> {
+    // Get the string bytes and its length as u8, ensuring it fits.
+    let bytes = csharp_string.0.as_bytes();
+    let len = bytes.len();
+
+    // Check if the length exceeds the maximum value that can be represented by u8.
+    if len > u8::MAX as usize {
+        return Err(io::Error::new(io::ErrorKind::InvalidInput, "String length exceeds u8::MAX"));
+    }
+
+    // Write the length of the string as u8.
+    writer.write_u8(len as u8)?;
+
+    // Write the string bytes.
+    writer.write_all(bytes)?;
+
+    Ok(())
 }
