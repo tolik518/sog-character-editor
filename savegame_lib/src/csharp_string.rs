@@ -14,22 +14,6 @@ impl CSharpString {
     }
 }
 
-impl Serialize for CSharpString {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        where
-            S: Serializer,
-    {
-        let bytes = self.0.as_bytes();
-        let len = bytes.len() as u8;
-        let mut seq = serializer.serialize_seq(Some(len as usize + 1))?;
-        seq.serialize_element(&len)?;
-        for byte in bytes {
-            seq.serialize_element(byte)?;
-        }
-        seq.end()
-    }
-}
-
 impl From<String> for CSharpString {
     fn from(s: String) -> Self {
         CSharpString(s)
@@ -63,6 +47,22 @@ impl From<CSharpString> for Vec<u8> {
 impl From<CSharpString> for String {
     fn from(s: CSharpString) -> Self {
         s.0
+    }
+}
+
+impl Serialize for CSharpString {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+    {
+        let bytes = self.0.as_bytes();
+        let len = bytes.len() as u8;
+        let mut seq = serializer.serialize_seq(Some(len as usize + 1))?;
+        seq.serialize_element(&len)?;
+        for byte in bytes {
+            seq.serialize_element(byte)?;
+        }
+        seq.end()
     }
 }
 

@@ -41,10 +41,10 @@ pub(crate) fn write_quickslots<W: Write>(writer: &mut W, quickslots: &[QuickSlot
         match quickslot {
             QuickSlot::Item(item_id) => {
                 writer.write_i32::<LittleEndian>(*item_id)?;
-            },
+            }
             QuickSlot::Skill(skill_id) => {
                 writer.write_u16::<LittleEndian>(*skill_id)?;
-            },
+            }
             QuickSlot::Empty => (),
         }
     }

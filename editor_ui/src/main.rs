@@ -6,8 +6,8 @@ use std::rc::Rc;
 use eframe::{egui, Error, Theme};
 use log::error;
 
-use savegame_lib::player::Player;
 use savegame_lib::csharp_string::CSharpString;
+use savegame_lib::player::Player;
 
 fn main() -> Result<(), Error> {
     env_logger::init(); // Log to stderr (if you run with `RUST_LOG=debug`).
@@ -19,7 +19,7 @@ fn main() -> Result<(), Error> {
         Err(io_err) => {
             error!("Failed to read player data: {}", io_err);
             std::process::exit(1);
-        },
+        }
     };
 
     let options = eframe::NativeOptions {
@@ -67,14 +67,3 @@ fn main() -> Result<(), Error> {
         });
     })
 }
-
-/*
-fn main() -> io::Result<()> {
-    let (player, remaining_bytes) = Player::read_from_file("test/savegames/0.cha")?;
-    println!("Sex: {}", player.player_part2.style_sex);
-    println!("Nickname: {:?}", player.nickname);
-
-    Player::write_to_file(&player, remaining_bytes, "test/savegames/30.cha",)?;
-    Ok(())
-}
-*/
