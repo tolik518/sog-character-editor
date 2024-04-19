@@ -40,6 +40,7 @@ fn main() -> Result<(), Error> {
                 ui.text_edit_singleline(&mut name)
                     .labelled_by(name_label.id);
             });
+
             // Editing player sex
             ui.vertical(|ui| {
                 ui.label("Sex:");
@@ -57,7 +58,7 @@ fn main() -> Result<(), Error> {
 
             // Add a button to save changes
             if ui.button("Save Changes").clicked() {
-                // Logic to save changes to the player object
+                player.nickname = CSharpString::new(name.clone());
                 if let Err(e) = player.write_to_file(bytes_clone, file_path) {
                     error!("Failed to save player data: {}", e);
                 } else {

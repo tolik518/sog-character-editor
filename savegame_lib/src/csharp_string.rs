@@ -9,7 +9,7 @@ use serde::ser::SerializeSeq;
 pub struct CSharpString(String);
 
 impl CSharpString {
-    fn new<S: Into<String>>(s: S) -> Self {
+    pub fn new<S: Into<String>>(s: S) -> Self {
         CSharpString(s.into())
     }
 }
