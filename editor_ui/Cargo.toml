@@ -8,12 +8,13 @@ rust-version = "1.72"
 [dependencies]
 savegame_lib = { path = "../savegame_lib/" }
 
-eframe = { version = "0.27.1", features = [
+eframe = { version = "0.27.2", features = [
     "default",
     "__screenshot", # __screenshot is so we can dump a screenshot using EFRAME_SCREENSHOT_TO
 ] }
 
-env_logger = { version = "0.10", default-features = false, features = [
+env_logger = { version = "0.11.3", default-features = false, features = [
     "auto-color",
     "humantime",
 ] }
+log = "0.4.21"
