@@ -15,3 +15,6 @@ It is basically a stripped down version of the <a href="https://github.com/tolik
 
 Download can be found on the [Releases](https://github.com/tolik518/sog-character-editor/releases) page.
 Just head over there and download the ".exe" of the latest version.
+
+
+###### Disclaimer: The icon was generated using DALL-E 2 by OpenAI.
