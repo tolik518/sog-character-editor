@@ -5,6 +5,7 @@ use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 use crate::csharp_string::{CSharpString, read_csharp_string, write_csharp_string};
+use crate::outfit_color::OutfitColor;
 use crate::quickslot::{QuickSlot, read_quickslots, write_quickslots};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -33,11 +34,11 @@ struct PlayerPart1 {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PlayerPart2 {
-    pub style_hair_color: u8,
+    pub style_hair_color: OutfitColor,
     pub style_skin_color: u8,
-    pub style_poncho_color: u8,
-    pub style_shirt_color: u8,
-    pub style_pants_color: u8,
+    pub style_poncho_color: OutfitColor,
+    pub style_shirt_color: OutfitColor,
+    pub style_pants_color: OutfitColor,
     pub style_sex: u8,
 }
 
