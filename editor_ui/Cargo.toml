@@ -1,6 +1,6 @@
 [package]
 name = "editor_ui"
-version = "0.1.0"
+version = "1.0.0"
 license = "MIT OR Apache-2.0 OR copyleft-next-0.3.1 OR CC-BY-4.0"
 edition = "2021"
 rust-version = "1.72"
@@ -8,6 +8,7 @@ rust-version = "1.72"
 
 [build-dependencies]
 winres = "0.1"
+
 
 [dependencies]
 savegame_lib = { path = "../savegame_lib/" }

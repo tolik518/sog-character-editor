@@ -8,7 +8,7 @@ use savegame_lib::csharp_string::CSharpString;
 use savegame_lib::player::Player;
 
 // Constants
-const WINDOW_TITLE: &str = "SoG: Character Editor v0.1";
+const WINDOW_TITLE: &str = "SoG: Character Editor v1.0.0";
 const WINDOW_WIDTH: f32 = 320.0;
 const WINDOW_HEIGHT: f32 = 160.0;
 const SEX_MALE: u8 = 1;
