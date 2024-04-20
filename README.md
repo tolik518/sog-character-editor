@@ -10,3 +10,8 @@ It is basically a stripped down version of the <a href="https://github.com/tolik
 </p> 
 
 ![Main Window](.github/screenshots/main.png)
+
+
+
+Download can be found on the [Releases](https://github.com/tolik518/sog-character-editor/releases) page.
+Just head over there and download the ".exe" of the latest version.
