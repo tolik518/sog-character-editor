@@ -1,7 +1,8 @@
-#![windows_subsystem = "windows"]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
 use eframe::{App as EframeApp, egui, Frame, Theme};
 use eframe::egui::{Button, FontId, RichText};
+use egui_extras::install_image_loaders;
 use rfd::FileDialog;
 
 use savegame_lib::csharp_string::CSharpString;
@@ -10,7 +11,7 @@ use savegame_lib::player::Player;
 // Constants
 const WINDOW_TITLE: &str = "SoG: Character Editor v1.0.0";
 const WINDOW_WIDTH: f32 = 320.0;
-const WINDOW_HEIGHT: f32 = 160.0;
+const WINDOW_HEIGHT: f32 = 320.0;
 const SEX_MALE: u8 = 1;
 const SEX_FEMALE: u8 = 0;
 
@@ -60,7 +61,15 @@ impl App {
         }
     }
 
-    fn display_player_ui(&mut self, ui: &mut egui::Ui) {
+    fn display_player_ui(&mut self, ui: &mut egui::Ui)
+    {
+        ui.add(
+            egui::Image::new(egui::include_image!("../../.github/repository-open-graph-banner.png"))
+                .rounding(5.0)
+                .tint(egui::Color32::from_rgb(200, 200, 200))
+        );
+        ui.add_space(10.0);
+
         if let Some(ref mut player) = self.player {
             // Editable text field for the player's name
             let mut name = player.nickname.0.clone();
@@ -142,6 +151,10 @@ fn main() -> Result<(), eframe::Error> {
     eframe::run_native(
         WINDOW_TITLE,
         options,
-        Box::new(|_cc| Box::new(App::default())),
+
+        Box::new(|cc| {
+            install_image_loaders(&cc.egui_ctx);
+            Box::new(App::default())
+        }),
     )
 }
