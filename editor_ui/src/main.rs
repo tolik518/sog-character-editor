@@ -1,10 +1,9 @@
 #![windows_subsystem = "windows"]
 
-use eframe::{egui, App as EframeApp, Frame, Theme};
-use eframe::egui::{Button, FontId, RichText, Vec2};
-use eframe::epaint::image;
-use egui::widgets;
+use eframe::{App as EframeApp, egui, Frame, Theme};
+use eframe::egui::{Button, FontId, RichText};
 use rfd::FileDialog;
+
 use savegame_lib::csharp_string::CSharpString;
 use savegame_lib::player::Player;
 
@@ -23,7 +22,7 @@ struct App {
 }
 
 impl EframeApp for App {
-    fn update(&mut self, ctx: &eframe::egui::Context, _frame: &mut Frame) {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             self.ui(ui);
         });
@@ -53,10 +52,10 @@ impl App {
                     self.file_path = Some(file_path);
                     self.player = Some(player);
                     self.remaining_bytes = Some(remaining_bytes);
-                },
+                }
                 Err(io_err) => {
                     eprintln!("Failed to read player data: {}", io_err);
-                },
+                }
             }
         }
     }
@@ -103,7 +102,7 @@ impl App {
 
             // Dynamic spacer to push the following content to the bottom
             let remaining_space = ui.available_size_before_wrap().y;
-            ui.allocate_space(egui::vec2(0.0, remaining_space-33.0));
+            ui.allocate_space(egui::vec2(0.0, remaining_space - 33.0));
 
             // File path label at the bottom
             ui.separator();
