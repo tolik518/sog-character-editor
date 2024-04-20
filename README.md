@@ -1,3 +1,7 @@
+
+<p align="center">
+    <img src="editor_ui/icon.png" width="128px">
+</p>
 <h1 align="center"> SoG Character Editor </h1>
 
 <p align="center"> 
