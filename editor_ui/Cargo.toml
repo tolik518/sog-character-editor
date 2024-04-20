@@ -5,6 +5,10 @@ license = "MIT OR Apache-2.0 OR copyleft-next-0.3.1 OR CC-BY-4.0"
 edition = "2021"
 rust-version = "1.72"
 
+
+[build-dependencies]
+winres = "0.1"
+
 [dependencies]
 savegame_lib = { path = "../savegame_lib/" }
 
@@ -18,3 +22,4 @@ env_logger = { version = "0.11.3", default-features = false, features = [
     "humantime",
 ] }
 log = "0.4.21"
+rfd = "0.14.1"

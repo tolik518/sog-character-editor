@@ -83,7 +83,7 @@ impl Player {
         ))
     }
 
-    pub fn write_to_file<P: AsRef<Path>>(&self, remaining_bytes: Vec<u8>, file_name: P) -> io::Result<()> {
+    pub fn write_to_file<P: AsRef<Path>>(&self, remaining_bytes: &Vec<u8>, file_name: P) -> io::Result<()> {
         let file = File::create(file_name)?;
         let mut writer = BufWriter::new(file);
 

@@ -6,7 +6,7 @@ use serde::ser::SerializeSeq;
 
 /// A custom type to represent a string that first stores its length as a `u8` followed by the characters.
 #[derive(Debug, Clone)]
-pub struct CSharpString(String);
+pub struct CSharpString(pub String);
 
 impl CSharpString {
     pub fn new<S: Into<String>>(s: S) -> Self {
