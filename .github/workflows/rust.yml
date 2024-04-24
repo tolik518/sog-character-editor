@@ -24,4 +24,4 @@ jobs:
       uses: actions/upload-artifact@v4.3.2
       with:
         name: editor_ui
-        path: target/debug/editor_ui
+        path: D:\\a\\sog-character-editor\\sog-character-editor\\target\\debug\\editor_ui.exe
