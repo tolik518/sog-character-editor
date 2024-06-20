@@ -26,40 +26,12 @@ struct App {
 
 
 pub fn outfit_color_to_color32(outfit_color: OutfitColor) -> egui::Color32 {
-    match outfit_color {
-        OutfitColor::_2C1D1D => egui::Color32::from_rgb(0x2C, 0x1D, 0x1D),
-        OutfitColor::_2E2226 => egui::Color32::from_rgb(0x2E, 0x22, 0x26),
-        OutfitColor::_574753 => egui::Color32::from_rgb(0x57, 0x47, 0x53),
-        OutfitColor::_959595 => egui::Color32::from_rgb(0x95, 0x95, 0x95),
-        OutfitColor::_CACACA => egui::Color32::from_rgb(0xCA, 0xCA, 0xCA),
-        OutfitColor::_E4E4E4 => egui::Color32::from_rgb(0xE4, 0xE4, 0xE4),
-        OutfitColor::_931317 => egui::Color32::from_rgb(0x93, 0x13, 0x17),
-        OutfitColor::_CD2627 => egui::Color32::from_rgb(0xCD, 0x26, 0x27),
-        OutfitColor::_DA4E3D => egui::Color32::from_rgb(0xDA, 0x4E, 0x3D),
-        OutfitColor::_8C3612 => egui::Color32::from_rgb(0x8C, 0x36, 0x12),
-        OutfitColor::_B0521C => egui::Color32::from_rgb(0xB0, 0x52, 0x1C),
-        OutfitColor::_CB6C17 => egui::Color32::from_rgb(0xCB, 0x6C, 0x17),
-        OutfitColor::_DE930D => egui::Color32::from_rgb(0xDE, 0x93, 0x0D),
-        OutfitColor::_DDB818 => egui::Color32::from_rgb(0xDD, 0xB8, 0x18),
-        OutfitColor::_EFDC40 => egui::Color32::from_rgb(0xEF, 0xDC, 0x40),
-        OutfitColor::_3B971A => egui::Color32::from_rgb(0x3B, 0x97, 0x1A),
-        OutfitColor::_6FB620 => egui::Color32::from_rgb(0x6F, 0xB6, 0x20),
-        OutfitColor::_9DD016 => egui::Color32::from_rgb(0x9D, 0xD0, 0x16),
-        OutfitColor::_255C7A => egui::Color32::from_rgb(0x25, 0x5C, 0x7A),
-        OutfitColor::_42B8D3 => egui::Color32::from_rgb(0x42, 0xB8, 0xD3),
-        OutfitColor::_A2D2DC => egui::Color32::from_rgb(0xA2, 0xD2, 0xDC),
-        OutfitColor::_252C7A => egui::Color32::from_rgb(0x25, 0x2C, 0x7A),
-        OutfitColor::_656CCF => egui::Color32::from_rgb(0x65, 0x6C, 0xCF),
-        OutfitColor::_7D8BF4 => egui::Color32::from_rgb(0x7D, 0x8B, 0xF4),
-        OutfitColor::_6C2191 => egui::Color32::from_rgb(0x6C, 0x21, 0x91),
-        OutfitColor::_A630D4 => egui::Color32::from_rgb(0xA6, 0x30, 0xD4),
-        OutfitColor::_C267F2 => egui::Color32::from_rgb(0xC2, 0x67, 0xF2),
-        OutfitColor::_912174 => egui::Color32::from_rgb(0x91, 0x21, 0x74),
-        OutfitColor::_E320BD => egui::Color32::from_rgb(0xE3, 0x20, 0xBD),
-        OutfitColor::_EC7BD9 => egui::Color32::from_rgb(0xEC, 0x7B, 0xD9)
-    }
+    let outfit_color= format!("{:?}", outfit_color);
+    let r = u8::from_str_radix(&outfit_color[1..3], 16).unwrap();
+    let g = u8::from_str_radix(&outfit_color[3..5], 16).unwrap();
+    let b = u8::from_str_radix(&outfit_color[5..7], 16).unwrap();
+    egui::Color32::from_rgb(r, g, b)
 }
-
 
 impl EframeApp for App {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut Frame) {
